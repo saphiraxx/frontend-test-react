@@ -10,40 +10,41 @@ const recommendationService = {
 
     if (!products || products.length === 0) return [];
 
-    const ratedProducts = products.map((product) => {
+    const ratedProducts = products.map((product, index) => {
       let score = 0;
 
       selectedPreferences.forEach((pref) => {
-        if (product.preferences.includes(pref)) {
-          score++;
-        }
+        if (product.preferences.includes(pref)) score++;
       });
 
       selectedFeatures.forEach((feat) => {
-        if (product.features.includes(feat)) {
-          score++;
-        }
+        if (product.features.includes(feat)) score++;
       });
 
-      return { ...product, score };
-    });
-
-    const rankedProducts = ratedProducts.sort((a, b) => {
-      if (a.score === b.score) {
-        return a.id - b.id;
-      }
-      return b.score - a.score;
+      return { ...product, score, originalIndex: index };
     });
 
     if (selectedRecommendationType === 'SingleProduct') {
-      return rankedProducts.length > 0 ? [rankedProducts[0]] : [];
+      let bestProduct = null;
+      let maxScore = -1;
+
+      ratedProducts.forEach((product) => {
+        if (product.score > maxScore) {
+          maxScore = product.score;
+          bestProduct = product;
+        } else if (product.score === maxScore) {
+          bestProduct = product;
+        }
+      });
+
+      return bestProduct ? [bestProduct] : [];
     }
 
     if (selectedRecommendationType === 'MultipleProducts') {
-      return rankedProducts.filter((p) => p.score > 0);
+      return ratedProducts
+        .filter((p) => p.score > 0)
+        .sort((a, b) => b.score - a.score);
     }
-
-    return rankedProducts;
   },
 };
 
