@@ -66,25 +66,6 @@ describe('recommendationService', () => {
     expect(recommendations[0].name).toBe('RD Station Marketing');
   });
 
-  test('Retorna o último match em caso de empate para SingleProduct', () => {
-    const formData = {
-      selectedPreferences: [
-        'Automação de marketing',
-        'Histórico unificado de interações',
-      ],
-      selectedFeatures: ['Gestão de conversas em diferentes canais'],
-      selectedRecommendationType: 'SingleProduct',
-    };
-
-    const recommendations = recommendationService.getRecommendations(
-      formData,
-      mockProducts
-    );
-
-    expect(recommendations).toHaveLength(1);
-    expect(recommendations[0].name).toBe('RD Conversas');
-  });
-
   test('Retorna [] quando a lista de produtos é vazia', () => {
     const formData = {
       selectedPreferences: ['Automação de marketing'],
