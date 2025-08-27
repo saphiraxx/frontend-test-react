@@ -68,7 +68,11 @@ describe('recommendationService', () => {
 
   test('Retorna o último match em caso de empate para SingleProduct', () => {
     const formData = {
-      selectedPreferences: ['Automação de marketing', 'Integração com chatbots'],
+      selectedPreferences: [
+        'Automação de marketing',
+        'Histórico unificado de interações',
+      ],
+      selectedFeatures: ['Gestão de conversas em diferentes canais'],
       selectedRecommendationType: 'SingleProduct',
     };
 
@@ -79,5 +83,34 @@ describe('recommendationService', () => {
 
     expect(recommendations).toHaveLength(1);
     expect(recommendations[0].name).toBe('RD Conversas');
+  });
+
+  test('Retorna [] quando a lista de produtos é vazia', () => {
+    const formData = {
+      selectedPreferences: ['Automação de marketing'],
+      selectedRecommendationType: 'SingleProduct',
+    };
+
+    const recommendations = recommendationService.getRecommendations(
+      formData,
+      []
+    );
+
+    expect(recommendations).toEqual([]);
+  });
+
+  test('Retorna [] quando nenhuma preferência ou feature foi selecionada', () => {
+    const formData = {
+      selectedPreferences: [],
+      selectedFeatures: [],
+      selectedRecommendationType: 'MultipleProducts',
+    };
+
+    const recommendations = recommendationService.getRecommendations(
+      formData,
+      mockProducts
+    );
+
+    expect(recommendations).toEqual([]);
   });
 });
