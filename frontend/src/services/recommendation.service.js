@@ -10,7 +10,7 @@ const recommendationService = {
 
     if (!products || products.length === 0) return [];
 
-    const ratedProducts = products.map((product, index) => {
+    const ratedProducts = products.map((product) => {
       let score = 0;
 
       selectedPreferences.forEach((pref) => {
@@ -21,12 +21,12 @@ const recommendationService = {
         if (product.features.includes(feat)) score++;
       });
 
-      return { ...product, score, originalIndex: index };
+      return { ...product, score};
     });
 
     if (selectedRecommendationType === 'SingleProduct') {
       let bestProduct = null;
-      let maxScore = -1;
+      let maxScore = 1; 
 
       ratedProducts.forEach((product) => {
         if (product.score > maxScore) {

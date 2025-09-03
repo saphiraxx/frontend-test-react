@@ -27,7 +27,7 @@ function Form({ setRecommendations }) {
       formData.selectedFeatures.length === 0 ||
       formData.selectedRecommendationType === ''
     ) {
-      setPopupMessage("Por favor, selecione ao menos uma preferência, funcionalidade e tipo de recomendação.");
+      setPopupMessage("Por favor, selecione pelo menos uma opção de cada categoria.");
       return;
     }
 
