@@ -26,7 +26,7 @@ const recommendationService = {
 
     if (selectedRecommendationType === 'SingleProduct') {
       let bestProduct = null;
-      let maxScore = 1; 
+      let maxScore = 0; 
 
       ratedProducts.forEach((product) => {
         if (product.score > maxScore) {
